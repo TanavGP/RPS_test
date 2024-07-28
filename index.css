@@ -1,0 +1,11 @@
+#options {
+    margin: 0 3em;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    height: 200px;
+}
+
+.btn {
+    flex: 1;
+}

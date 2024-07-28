@@ -1,51 +1,55 @@
+const resultDisplay = document.querySelector('#result-display');
+const buttons = document.querySelectorAll('.btn');
+
 function playRound(humanChoice, computerChoice){
+    humanChoice = humanChoice.toLowerCase();
+    computerChoice = computerChoice.toLowerCase();
+
     if (humanChoice == computerChoice) {
-        alert("Draw!");
+        displayResult("draw", computerChoice);
         return;
     }
+
     if (humanChoice == "rock") {
         if (computerChoice == "scissors") {
-            alert("You Won!");
+            displayResult("won", computerChoice);
         } else {
-            alert("You Lost!");
+            displayResult("lost", computerChoice);
         }
     } else if (humanChoice == "paper") {
         if (computerChoice == "rock") {
-            alert("You Won!");
+            displayResult("won", computerChoice);
         } else {
-            alert("You Lost!");
+            displayResult("lost", computerChoice);
         }
     } else {
         if (computerChoice == "paper") {
-            alert("You Won!");
+            displayResult("won", computerChoice);
         } else {
-            alert("You Lost!");
+            displayResult("lost", computerChoice);
         }
     }
 }
 
-function getHumanChoice() {
-    let isOk = false;
-    let choice = null;
-    while (!isOk) {
-        choice = prompt("Rock, Paper or Scissors?: ");
-        choice = choice.toLowerCase();
-        if (choice == "rock" || choice == "paper" || choice == "scissors")
-            isOk = true;
-        else
-            alert("Invalid Choice!");
+function displayResult(result, computerChoice) {
+    let displayMessage = null;
+    switch (result) {
+        case "draw": displayMessage = `You Drew! The Computer chose ${computerChoice}`; break;
+        case "won": displayMessage = `You Won! The Computer chose ${computerChoice}`; break;
+        case "lost": displayMessage = `You Lost :( The Computer chose ${computerChoice}`; break;
     }
-    
-    return choice;
+
+    resultDisplay.textContent = displayMessage;
 }
 
 function getComputerChoice() {
     let choice = ["rock", "paper", "scissors"][Math.floor(Math.random() * 3)];
-    alert(`The Computer Chose ${choice}!`);
     return choice;
 }
 
-const humanChoice = getHumanChoice();
-const computerChoice = getComputerChoice();
-
-playRound(humanChoice, computerChoice);
+buttons.forEach(button => {
+    button.addEventListener("click", (e) => {
+        const humanChoice = e.target.classList[1];
+        playRound(humanChoice, getComputerChoice());
+    })
+}); 
